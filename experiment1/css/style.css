@@ -6,21 +6,54 @@ canvas {
     height: 100%;
 }
 
-/* Center the canvas element on the page */
+/* Center the canvas element on the page and give background color */
 body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #fff6e5; /* Warm cream color */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
+/* Adjust the main container */
 #canvas-container {
     width: 100%;
     height: 600px;
 }
 
+/* Quest Box Styling */
 #box {
     font-size: 1.1em;
     line-height: 1.6em;
-    padding: 1em;
+    padding: 1.5em;
     white-space: normal;
-  }
+    border-radius: 12px;
+    border: 2px solid #a07855;
+    background: #fff0d9;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    font-family: 'Georgia', serif; /* More readable and classy */
+    margin: 1.5em auto;
+}
+
+/* Get Quest Button Styling */
+#clicker {
+    padding: 1em 2em;
+    font-size: 1.2em;
+    border-radius: 10px;
+    border: none;
+    background-color: #d27c2c;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-bottom: 1em;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+#clicker:hover {
+    background-color: #b8641e;
+    transform: scale(1.05);
+}
