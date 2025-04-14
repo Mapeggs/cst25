@@ -12,65 +12,140 @@ const VALUE2 = 2;
 
 // Globals
 let myInstance;
+let seed = 5;
+let waveOffset = 0;
+let rocks = [];
+
 let canvasContainer;
 var centerHorz, centerVert;
 
-class MyClass {
-    constructor(param1, param2) {
-        this.property1 = param1;
-        this.property2 = param2;
-    }
-
-    myMethod() {
-        // code to run when method is called
-    }
-}
-
-function resizeScreen() {
-  centerHorz = canvasContainer.width() / 2; // Adjusted for drawing logic
-  centerVert = canvasContainer.height() / 2; // Adjusted for drawing logic
-  console.log("Resizing...");
-  resizeCanvas(canvasContainer.width(), canvasContainer.height());
-  // redrawCanvas(); // Redraw everything based on new size
-}
-
-// setup() function is called once when the program starts
 function setup() {
-  // place our canvas, making it fit our container
   canvasContainer = $("#canvas-container");
   let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
   canvas.parent("canvas-container");
-  // resize canvas is the page is resized
 
-  // create an instance of the class
-  myInstance = new MyClass("VALUE1", "VALUE2");
+  generateRocks();
 
-  $(window).resize(function() {
+  document.getElementById("reimagine").addEventListener("click", () => {
+    seed++;
+    generateRocks();
+  });
+  
+  document.getElementById("fullscreen").addEventListener("click", () => {
+    let fs = fullscreen();
+    fullscreen(!fs);
+  });
+  
+
+  $(window).resize(function () {
     resizeScreen();
   });
   resizeScreen();
 }
 
-// draw() function is called repeatedly, it's the main animation loop
 function draw() {
-  background(220);    
-  // call a method on the instance
-  myInstance.myMethod();
+  randomSeed(seed);
+  let t = millis() / 1000;
+  waveOffset = sin(t * 0.4) * 15;
 
-  // Set up rotation for the rectangle
-  push(); // Save the current drawing context
-  translate(centerHorz, centerVert); // Move the origin to the rectangle's center
-  rotate(frameCount / 100.0); // Rotate by frameCount to animate the rotation
-  fill(234, 31, 81);
+  background(255);
+  drawSandLayer();
+  drawOceanLayer();
+  drawWaveFoam();
+  drawRocks();
+  drawMiniWaves();
+}
+
+function windowResized() {
+  resizeScreen();
+}
+
+function resizeScreen() {
+  let w = fullscreen() ? windowWidth : canvasContainer.width();
+  let h = fullscreen() ? windowHeight : canvasContainer.height();
+  resizeCanvas(w, h);
+}
+
+// Layers & Effects
+function drawSandLayer() {
+  for (let y = 0; y < height; y++) {
+    let inter = map(y, 0, height, 0, 1);
+    let c = lerpColor(color(240, 200, 150), color(255, 230, 180), inter);
+    fill(c);
+    rect(0, y, width, 1);
+  }
+}
+
+function drawOceanLayer() {
+  let oceanBottom = height * 0.55 + waveOffset;
+
+  for (let y = 0; y < oceanBottom; y++) {
+    let inter = map(y, 0, oceanBottom, 0, 1);
+    let c = lerpColor(color(0, 90, 160), color(0, 180, 210, 180), inter);
+    fill(c);
+    rect(0, y, width, 1);
+  }
+
+  fill(0, 60, 100, 30);
+  for (let i = 0; i < 5; i++) {
+    let x = map(i, 0, 5, 100, width - 100) + sin(millis() * 0.0005 + i) * 10;
+    let y = noise(i + 999, millis() * 0.00003) * (oceanBottom * 0.8);
+    ellipse(x, y, random(200, 800), random(35, 50));
+  }
+}
+
+function drawWaveFoam() {
+  fill(255, 255, 255, 255);
+  stroke(350);
+  strokeWeight(30);
+
+  beginShape();
+  for (let x = 0; x <= width; x += 5) {
+    let y = height * 0.55 + waveOffset +
+      sin(x * 0.02 + frameCount * 0.03) * 6 +
+      noise(x * 0.01, frameCount * 0.005) * 12;
+    curveVertex(x, y);
+    if (x === 0 || x === width) curveVertex(x, y);
+  }
+  endShape(CLOSE);
+
   noStroke();
-  rect(-125, -125, 250, 250); // Draw the rectangle centered on the new origin
-  pop(); // Restore the original drawing context
+}
 
-  // The text is not affected by the translate and rotate
-  fill(255);
-  textStyle(BOLD);
-  textSize(140);
-  text("p5*", centerHorz - 105, centerVert + 40);
+function drawMiniWaves() {
+  let oceanBottom = height * 0.55 + waveOffset;
+
+  for (let i = 0; i < 10; i++) {
+    let y = random(30, oceanBottom - 30);
+    stroke(255, 255, 255, random(20, 40));
+    strokeWeight(random(0.5, 1.2));
+    noFill();
+
+    beginShape();
+    for (let x = 0; x <= width; x += 8) {
+      let wave = sin(x * 0.03 + frameCount * 0.03 + i * 10) * 2;
+      vertex(x, y + wave);
+    }
+    endShape();
+  }
+}
+
+function generateRocks() {
+  rocks = [];
+  for (let i = 0; i < 40; i++) {
+    rocks.push({
+      x: random(width),
+      y: random(height * 0.65, height),
+      size: random(5, 15),
+    });
+  }
+}
+
+function drawRocks() {
+  fill(80);
+  for (let r of rocks) {
+    ellipse(r.x, r.y, r.size, r.size * 0.6);
+  }
 }
 
 // mousePressed() function is called once after every time a mouse button is pressed
