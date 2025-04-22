@@ -2,7 +2,7 @@
 <html>
 <head>
 	<!-- This title is used for tabs and bookmarks -->
-	<title>Experiment X - Subject/Topic</title>
+	<title>Experiment 3 - Alternate Worlds</title>
 
 	<!-- Use UTF character set, a good idea with any webpage -->
 	<meta charset="UTF-8" />
@@ -32,30 +32,47 @@
 	<main id="content">
 		<section>
 
-			<h1>Experiment X - Subject/Topic</h1>
+			<h1>Experiment 3 - Alternate Worlds</h1>
 
 			<div class="minor-section">
-				<div id="canvas-container">
-					<!-- canvas will be added here -->
+				<div id="canvas-container"></div>
+				<div class="button-box">
+				  <button id="reseedButton">Reseed</button>
+				  <button id="fullscreen">Fullscreen</button>
+				  <span id="seedReport"></span>
 				</div>
-                <div class="fullscreen-box">
-                    <button id="fullscreen">Fullscreen</button>
-                </div>
-			</div>
+			  </div>
 
 			<div class="minor-section">
 				<h2>Description</h2>
-				<p>What are you trying to acomplish with this experiment?</p>
+				<p>This project generates a procedurally created overworld map using noise-based terrain generation and tile-based rendering. 
+					The map includes water, dirt, grass, trees, and a house. Each time the seed is changed, a new world is generated with different 
+					terrain layout and tile placement.</p>
+
+				<p>
+					The world shows signs of life with animated cloud chunks that drift slowly across the screen over time. 
+					Each cloud is made up of multiple tiles to create cohesive cloud clusters. This animation brings visual movement to 
+					the overworld and adds depth to the environment.
+				</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Technical</h2>
-				<p>Describe in detail what you did technically and how it works?</p>
+				<p>The grid is displayed as editable ASCII characters. Users can modify the world by changing the character codes in the grid box:
+					<ul>
+						<li>"W" represents water</li>
+						<li>":" represents dirt</li>
+						<li>"_" represents grass</li>
+						<li>"T" represents trees</li>
+						<li>"H" represents a house (only one is placed per map)</li>
+					</ul>
+					These codes are processed by drawGrid() and matched with specific tile positions from the tileset.?
+				</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Reflection</h2>
-				<p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p>
+				<p>This project was pretty difficult to work on by myself, but I learned a lot—especially with cloud animation and autotiling. I’m still figuring out some parts, but I’m proud of how much I was able to get working. Overall, it was a rewarding experience and helped me grow more confident in my coding skills.</p>
 			</div>
 
 		</section>
