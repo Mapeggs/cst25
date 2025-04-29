@@ -2,7 +2,7 @@
 <html>
 <head>
 	<!-- This title is used for tabs and bookmarks -->
-	<title>Experiment 3 - Alternate Worlds</title>
+	<title>Experiment 4 - Infinite Worlds</title>
 
 	<!-- Use UTF character set, a good idea with any webpage -->
 	<meta charset="UTF-8" />
@@ -25,54 +25,62 @@
 	<!-- Use me for a JavaScript OOP Project -->
 	<script type="text/javascript" src="./js/project.js" DEFER></script>
 	<!-- Use me for a p5.js project -->
-	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
+	<script src="./js/xxhash.min.js" defer></script>
+	<script src="./js/engine.js" defer></script>  
+
+
+
 </head>
 <body>
 	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
 	<main id="content">
 		<section>
 
-			<h1>Experiment 3 - Alternate Worlds</h1>
+			<h1>Experiment 4 - Infinite Worlds</h1>
 
 			<div class="minor-section">
-				<div id="canvas-container"></div>
-				<div class="button-box">
-				  <button id="reseedButton">Reseed</button>
-				  <button id="fullscreen">Fullscreen</button>
-				  <span id="seedReport"></span>
+				<div id="canvas-container">
+
 				</div>
+				<div class="button-box">
+					<button onclick="loadWorld('day')">Daytime Beach</button>
+					<button onclick="loadWorld('night')">Nighttime Beach</button>
+					<button onclick="loadWorld('sunset')">Sunset Beach</button>
+					<button id="fullscreen">Fullscreen</button>
+
+					<p>Refresh the page in order to see each beach Variation</p>
+				  </div>
+				  
 			  </div>
 
 			<div class="minor-section">
 				<h2>Description</h2>
-				<p>This project generates a procedurally created overworld map using noise-based terrain generation and tile-based rendering. 
-					The map includes water, dirt, grass, trees, and a house. Each time the seed is changed, a new world is generated with different 
-					terrain layout and tile placement.</p>
-
 				<p>
-					The world shows signs of life with animated cloud chunks that drift slowly across the screen over time. 
-					Each cloud is made up of multiple tiles to create cohesive cloud clusters. This animation brings visual movement to 
-					the overworld and adds depth to the environment.
+					This project is an infinite, scrollable beach world that stretches endlessly across the screen. 
+  					Inspired by real-world coastal landscapes, it captures the beauty of different times of day — 
+  					allowing users to explore a vibrant daytime beach, a peaceful sunset shore, and a serene nighttime coastline. 
+  					The world responds dynamically to user input: clicking on the beach places objects like seashells and starfish, 
+  					while interactions with the water trigger splash animations. Each world variation is procedurally generated 
+  					based on a key input, ensuring a unique and fully reproducible landscape every time.
 				</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Technical</h2>
-				<p>The grid is displayed as editable ASCII characters. Users can modify the world by changing the character codes in the grid box:
-					<ul>
-						<li>"W" represents water</li>
-						<li>":" represents dirt</li>
-						<li>"_" represents grass</li>
-						<li>"T" represents trees</li>
-						<li>"H" represents a house (only one is placed per map)</li>
-					</ul>
-					These codes are processed by drawGrid() and matched with specific tile positions from the tileset.?
+				<p>
+					The infinite beach world is built using p5.js and a custom engine that supports smooth horizontal scrolling through an endless landscape. 
+					Each variation (daytime, sunset, nighttime) is implemented as a separate world generator, using a unique color palette and procedural techniques.
+					A world key input field allows users to generate deterministic variations: the XXHash algorithm hashes the key to seed both the noise functions 
+					and object placements, ensuring the same key always produces the same world. Spatial variation is achieved through layered sky, water, and sand tiles, 
+					with randomly scattered beach objects like seashells, starfish, and rocks. Signs of life are incorporated through user interactions—clicking on water 
+					generates animated splashes, while clicking on sand places new beach objects. The camera system uses velocity and easing to create smooth, 
+					continuous movement across the infinite terrain.
 				</p>
+				  
 			</div>
 
 			<div class="minor-section">
 				<h2>Reflection</h2>
-				<p>This project was pretty difficult to work on by myself, but I learned a lot—especially with cloud animation and autotiling. I’m still figuring out some parts, but I’m proud of how much I was able to get working. Overall, it was a rewarding experience and helped me grow more confident in my coding skills.</p>
 			</div>
 
 		</section>
@@ -83,5 +91,35 @@
             </ul>
 		</nav>
 	</main>
+	<script>
+		let currentWorldScript = null;
+		
+		function loadWorld(type) {
+		  if (currentWorldScript) {
+			currentWorldScript.remove();
+		  }
+		
+		  const script = document.createElement('script');
+		  script.defer = true;
+		  
+		  if (type === 'day') {
+			script.src = './js/myworld_day.js';
+		  } else if (type === 'night') {
+			script.src = './js/myworld_night.js';
+		  } else if (type === 'sunset') {
+			script.src = './js/myworld_sunset.js';
+		  }
+
+
+		
+		  script.onload = () => {
+			console.log(`${type} world loaded`);
+			rebuildWorld(document.querySelector("input").value); // rebuild using input box value
+		  };
+		
+		  document.body.appendChild(script);
+		  currentWorldScript = script;
+		}
+	</script>
 </body>
 </html>
