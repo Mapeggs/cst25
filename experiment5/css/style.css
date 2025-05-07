@@ -90,3 +90,22 @@ body {
 .button-box button:hover {
     background-color: #d4b378;
 }
+
+
+.image-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 10px;
+}
+
+.image-column {
+    flex: 1;
+    text-align: center;
+}
+
+.image-column img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #999;
+}

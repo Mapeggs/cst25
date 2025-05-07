@@ -2,7 +2,7 @@
 <html>
 <head>
 	<!-- This title is used for tabs and bookmarks -->
-	<title>Experiment X - Subject/Topic</title>
+	<title>Experiment 5 - Celebrity Impressionsc</title>
 
 	<!-- Use UTF character set, a good idea with any webpage -->
 	<meta charset="UTF-8" />
@@ -22,43 +22,66 @@
 
 	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
     <script type="text/javascript" src="../js/site.js" DEFER></script>
-	<!-- Use me for a JavaScript OOP Project -->
-	<script type="text/javascript" src="./js/project.js" DEFER></script>
-	<!-- Use me for a p5.js project -->
-	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
+
+	<script type="text/javascript" src="./js/mydesign.js" defer></script>
+	<script type="text/javascript" src="./js/glitch_renderer.js" defer></script>
+
 </head>
 <body>
 	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
 	<main id="content">
 		<section>
-
-			<h1>Experiment X - Subject/Topic</h1>
-
+			<h1>Experiment 5 - Evolutionary Impressions</h1>
+	  
+			<!-- Controls -->
 			<div class="minor-section">
-				<div id="canvas-container">
-					<!-- canvas will be added here -->
-				</div>
-                <div class="fullscreen-box">
-                    <button id="toggle-fullscreen">Fullscreen</button>
-                </div>
-			</div>
+			  	<select id="dropper"></select>
+			  	<button id="restart">restart</button>
+			  	<p>
+					Mutation rate (<span id="rate">100</span>%):<br />
+					<input id="slider" type="range" min="1" max="100" value="100" />
+			  	</p>
 
+			  	<!-- Image Display Row -->
+				<div class="image-row">
+					<div class="image-column">
+				  	<h3>Inspiration Image</h3>
+				  	<div id="inspiration"></div>
+					</div>
+					<div class="image-column">
+				  	<h3>Active Image</h3>
+				  	<div id="active"></div>
+					</div>
+					<div class="image-column">
+				  	<h3>Best Image</h3>
+				  	<div id="best"></div>
+					</div>
+			  	</div>
+				<p>Active score: <span id="activeScore"></span></p>
+				<p>Exploration rate: <span id="fpsCounter"></span> fps</p>
+				<p>Best score: <span id="bestScore"></span></p>
+				<div id="memory" data-max-items="16"></div>
+			</div>
+	  
+	  
+	  
+			<!-- Writeups -->
 			<div class="minor-section">
-				<h2>Description</h2>
-				<p>What are you trying to acomplish with this experiment?</p>
+			  <h2>Description</h2>
+			  <p>What are you trying to accomplish with this experiment?</p>
 			</div>
-
+	  
 			<div class="minor-section">
-				<h2>Technical</h2>
-				<p>Describe in detail what you did technically and how it works?</p>
+			  <h2>Technical</h2>
+			  <p>Describe in detail what you did technically and how it works.</p>
 			</div>
-
+	  
 			<div class="minor-section">
-				<h2>Reflection</h2>
-				<p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p>
+			  <h2>Reflection</h2>
+			  <p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p>
 			</div>
-
-		</section>
+		  </section>
+	  
 		<nav id="links" class="minor-section">
 			<!-- Put link back to homepage here. -->
             <ul>
